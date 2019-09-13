@@ -113,8 +113,14 @@ php /app/webapp/src/yii migrate --interactive=0
 ```sh
 rm docroot/webapp/composer.phar
 ```
-
 The installation is finished!
+
+This should be the final project structure (before remove composer.phar at point 12):
+
+<img width="818" alt="Senzanome" src="https://user-images.githubusercontent.com/4108673/64895637-6a0cf180-d67d-11e9-8e4f-7aa00a22e4de.png">
+
+
+
 
 ## Checks
 
