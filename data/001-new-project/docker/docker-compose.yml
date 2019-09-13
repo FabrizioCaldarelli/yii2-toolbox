@@ -1,0 +1,51 @@
+version: '3'
+services:
+
+  web:
+    build:
+      dockerfile: Dockerfile
+      context: 'web'
+      args:
+        - PHP_BASE_IMAGE_VERSION=${PHP_BASE_IMAGE_VERSION}
+        - APACHE_ENABLE_REWRITE=${APACHE_ENABLE_REWRITE}
+        - PHP_ENABLE_XDEBUG=${PHP_ENABLE_XDEBUG}
+    image: ${PHP_IMAGE_NAME}:${PHP_BASE_IMAGE_VERSION}${PHP_IMAGE_VERSION_SUFFIX}
+    environment:
+      - GITHUB_API_TOKEN=${GITHUB_API_TOKEN}
+      - PHP_ENABLE_XDEBUG
+      - TEST_RUNTIME_PATH=/tmp/runtime
+    volumes:
+      # Application testing
+      - ./..:/app:delegated
+      # Composer cache
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+    ports:
+      - '8000:80'
+    depends_on:
+        - phpmyadmin
+        - mysql      
+
+  phpmyadmin:
+      image: ${PHPMYADMIN_IMAGE_NAME}
+      container_name: phpmyadmin
+      ports:
+          - '8888:80'
+      environment:
+          - PMA_ARBITRARY=1
+          - PMA_HOST=${MYSQL_HOST}
+      depends_on:
+          - mysql
+
+
+  mysql:
+      image: ${MYSQL_IMAGE_NAME}
+      container_name: ${MYSQL_HOST}
+      environment:
+          - MYSQL_DATABASE=${MYSQL_DATABASE}
+          - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+          - MYSQL_USER=${MYSQL_USER}
+          - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      ports:
+          - '3306:3306'
+      volumes:
+          - ./data/db/mysql:/var/lib/mysql
