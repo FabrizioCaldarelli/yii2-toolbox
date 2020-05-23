@@ -27,7 +27,7 @@ RUN apt-get update && \
             libpng-dev \
             libxml2-dev \
             zlib1g-dev \
-            mysql-client \
+            mariadb-client \
             openssh-client \
             nano \
             unzip \
