@@ -159,7 +159,13 @@ To debug with VSCode, starting from `docroot` folder, create a `.vscode` folder 
             "port": 9005,
             "pathMappings": {
                 "/app" : "${workspaceFolder}"
-            }
+            },
+            "xdebugSettings": {
+                "max_children": 200,
+                "max_data": 512,
+                "max_depth": 4,
+                "show_hidden": 1
+            }            
         },
         {
             "name": "Launch currently open script",
@@ -170,7 +176,13 @@ To debug with VSCode, starting from `docroot` folder, create a `.vscode` folder 
             "port": 9005,
             "pathMappings": {
                 "/app": "${workspaceFolder}"
-            }
+            },
+            "xdebugSettings": {
+                "max_children": 200,
+                "max_data": 512,
+                "max_depth": 4,
+                "show_hidden": 1
+            }            
         }
     ]
 }
